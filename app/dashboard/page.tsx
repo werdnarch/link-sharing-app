@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Phone from "@/components/Phone";
 import Header from "@/components/Header";
 import Container from "@/components/Container";
 import BlueButton from "@/components/BlueButton";
@@ -33,9 +34,7 @@ export default function Page() {
       <Header activeTab={activeTab} setActiveTab={setActiveTab} />
 
       <section className="flex  gap-4 flex-1  mb-4 md:mb-8">
-        <Container active={true} className="w-[40%] hidden lg:flex">
-          <p></p>
-        </Container>
+        <Phone name={user.firstName + " " + user.lastName} email={user.email} />
 
         <Container active={activeTab === "Links"} className="flex-1">
           <div className="flex flex-col gap-2 md:gap-4">
