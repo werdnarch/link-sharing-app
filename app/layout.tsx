@@ -10,8 +10,11 @@ const InterFont = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Next Starter Temp",
-  description: "This is my personal next-starter",
+  title: "Devlinks",
+  description: "this is a link sharing app",
+  icons: {
+    icon: "/favicon.svg",
+  },
 };
 
 export default function RootLayout({

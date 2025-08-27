@@ -17,7 +17,7 @@ export default function LogOut() {
         console.error("Sign out error:", error);
       } else {
         toast.success("Signed out successfully");
-        router.push("/");
+        router.push("/login");
       }
     } catch (err) {
       console.error("Unexpected sign out error:", err);

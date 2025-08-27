@@ -110,6 +110,10 @@
   --sidebar-accent-foreground: oklch(0.985 0.001 106.423);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.553 0.013 58.071);
+  --page-background: #363636;
+  --page-container: #111111;
+  --page-semi-container: #363636;
+  --page-container-color: #c9c9c9;
 }
 
 @layer base {
@@ -123,8 +127,17 @@
 
 body {
   height: 100dvh;
-  background: var(--background);
+  background: var(--page-background);
   color: var(--foreground);
   font-family: var(--font-inter);
   transition: background 400ms ease-in-out, color 400ms ease-in-out;
+}
+
+.containers {
+  background: var(--page-container);
+  color: var(--page-container-color);
+}
+.semi-containers {
+  background: var(--page-semi-container);
+  color: var(--page-container-color);
 }

@@ -32,9 +32,9 @@ import { Loader2 } from "lucide-react";
 import Link from "next/link";
 
 const formSchema = z.object({
-  username: z.string().min(3).max(40),
+  name: z.string().min(3).max(40),
+  lastname: z.string().min(3).max(40),
   email: z.email(),
-
   password: z.string().min(8),
 });
 
@@ -49,7 +49,8 @@ export function SignUpForm({
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      username: "",
+      name: "",
+      lastname: "",
       email: "",
       password: "",
     },
@@ -66,7 +67,8 @@ export function SignUpForm({
     const { success, message } = await signUp(
       values.email,
       values.password,
-      values.username
+      values.name,
+      values.lastname
     );
 
     if (success) {
@@ -114,10 +116,30 @@ export function SignUpForm({
                   <div className="grid gap-3">
                     <FormField
                       control={form.control}
-                      name="username"
+                      name="name"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Username</FormLabel>
+                          <FormLabel>First Name</FormLabel>
+                          <FormControl>
+                            <Input
+                              placeholder="User"
+                              {...field}
+                              autoComplete="off"
+                              type="text"
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                  <div className="grid gap-3">
+                    <FormField
+                      control={form.control}
+                      name="lastname"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Last Name</FormLabel>
                           <FormControl>
                             <Input
                               placeholder="User"

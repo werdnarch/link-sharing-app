@@ -1,5 +1,7 @@
 "use server";
 import { auth } from "@/lib/auth";
+import { user as userTable } from "@/db/schema";
+import { db } from "@/db/drizzle";
 
 export const signIn = async (email: string, password: string) => {
   try {
@@ -26,14 +28,15 @@ export const signIn = async (email: string, password: string) => {
 export const signUp = async (
   email: string,
   password: string,
-  username: string
+  name: string,
+  lastName: string
 ) => {
   try {
     await auth.api.signUpEmail({
       body: {
         email,
         password,
-        name: username,
+        name: [name, lastName].filter(Boolean).join(" "),
       },
     });
 

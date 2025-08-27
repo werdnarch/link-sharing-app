@@ -1,14 +1,54 @@
 import { notFound } from "next/navigation";
-import { WelcomeMessage } from "@/types";
+import { ProfileType } from "@/types";
 
-export const getWelcomeMessage = async () => {
-  const res = await fetch("/api/welcome");
+export const getProfileDetails = async () => {
+  const res = await fetch("/api/user/me");
 
   if (!res.ok) {
     return notFound();
   }
 
-  const data: WelcomeMessage = await res.json();
+  const data: ProfileType = await res.json();
 
   return data;
+};
+
+export const editProfileDetails = async ({
+  image,
+  name,
+}: {
+  image: string;
+  name: string;
+}) => {
+  try {
+    const res = await fetch("/api/user/me", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ image, name }),
+    });
+
+    if (!res.ok) {
+      const errorData = await res.json().catch(() => null);
+      throw new Error(
+        errorData?.message || `HTTP error! status: ${res.status}`
+      );
+    }
+
+    const updatedUser = await res.json();
+
+    return {
+      success: true,
+      data: updatedUser,
+      message: "Profile updated successfully",
+    };
+  } catch (error) {
+    console.error("Error updating profile:", error);
+    return {
+      success: false,
+      message:
+        error instanceof Error ? error.message : "Failed to update profile",
+    };
+  }
 };
