@@ -2,7 +2,7 @@ import React, { ReactNode } from "react";
 
 interface BlueButton {
   children: ReactNode;
-  onClick?: () => {};
+  onClick?: () => void;
 }
 
 export default function BlueButton({ children, onClick }: BlueButton) {

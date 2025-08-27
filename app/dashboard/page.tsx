@@ -11,7 +11,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getProfileDetails } from "./actions";
 import Loading from "@/components/Loading";
 
-export default function page() {
+export default function Page() {
   const [activeTab, setActiveTab] = useState<"Links" | "Profile">("Profile");
 
   const {
