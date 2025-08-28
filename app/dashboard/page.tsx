@@ -3,17 +3,14 @@
 import React, { useState } from "react";
 import Phone from "@/components/Phone";
 import Header from "@/components/Header";
-import Container from "@/components/Container";
-import BlueButton from "@/components/BlueButton";
-import { Plus } from "lucide-react";
-import Wrapper from "@/components/ui/Wrapper";
+import LinksTab from "@/components/LinksTab";
 import Profile from "@/components/Profile";
 import { useQuery } from "@tanstack/react-query";
 import { getProfileDetails } from "./actions";
 import Loading from "@/components/Loading";
 
 export default function Page() {
-  const [activeTab, setActiveTab] = useState<"Links" | "Profile">("Profile");
+  const [activeTab, setActiveTab] = useState<"Links" | "Profile">("Links");
 
   const {
     data: user,
@@ -36,23 +33,8 @@ export default function Page() {
       <section className="flex  gap-4 flex-1  mb-4 md:mb-8">
         <Phone name={user.firstName + " " + user.lastName} email={user.email} />
 
-        <Container active={activeTab === "Links"} className="flex-1">
-          <div className="flex flex-col gap-2 md:gap-4">
-            <h1 className="font-bold text-[1.3rem] md:text-3xl">
-              Customise your links
-            </h1>
+        <LinksTab active={activeTab === "Links"} />
 
-            <p className="text-sm">
-              Add/edit/remove links below and then share all your profiles with
-              the world
-            </p>
-          </div>
-
-          <BlueButton>
-            <Plus className="size-4" />
-            <p>Add new link</p>
-          </BlueButton>
-        </Container>
         <Profile active={activeTab === "Profile"} user={user} />
       </section>
     </main>

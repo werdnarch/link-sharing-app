@@ -9,3 +9,9 @@ export type ProfileType = {
   lastName: string;
   email: string;
 };
+
+export type LinkType = {
+  id: string;
+  platform: "Github" | "Youtube";
+  link: string;
+};
