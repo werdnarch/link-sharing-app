@@ -8,7 +8,8 @@ import NoLinks from "./NoLinks";
 import { useData } from "@/context/DataContext";
 import { LinkType } from "@/types";
 import SelectIcon from "./SelectIcon";
-import Link from "next/link";
+import { ArrowLeft, ArrowRight } from "lucide-react";
+import LinkCard from "./LinkCard";
 
 interface PhoneProps {
   name: string;
@@ -45,13 +46,7 @@ export default function Phone({ email, name }: PhoneProps) {
         <div className="w-[90%] flex-1 flex flex-col gap-2 ">
           {links.length > 0 ? (
             links.map((link: LinkType, index: number) => (
-              <div
-                key={`link-${index}-phone`}
-                className="border rounded-lg text-[0.8rem] p-3 text-white border-white/70 px-4 flex items-center gap-2 hover:scale-97 transition-all duration-200 ease-in-out"
-              >
-                <SelectIcon option={link.platform} />
-                {link.platform}
-              </div>
+              <LinkCard key={`phone-link-${index}`} platform={link.platform} />
             ))
           ) : (
             <NoLinks />

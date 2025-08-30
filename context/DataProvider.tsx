@@ -1,13 +1,25 @@
 "use client";
-import { ReactNode, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { DataContext, LinkType } from "@/context/DataContext";
+import { useQuery } from "@tanstack/react-query";
+import { getLinks } from "./action";
 
 type Props = {
   children: ReactNode;
 };
 
 export default function DataProvider({ children }: Props) {
-  const [links, setLinks] = useState<LinkType[]>([]);
+  const { data, isPending, error } = useQuery({
+    queryKey: ["get-link-context"],
+    queryFn: getLinks,
+  });
+
+  const [links, setLinks] = useState<LinkType[]>(data ?? []);
+
+  useEffect(() => {
+    if (!data) return;
+    setLinks(data);
+  }, [data]);
 
   const addLink = (link: LinkType) => {
     setLinks((prev) => [...prev, link]);

@@ -28,7 +28,7 @@ export default function Page() {
 
   return (
     <main className="w-full min-h-screen flex flex-col gap-4 p-4 md:p-8 max-w-7xl mx-auto ">
-      <Header activeTab={activeTab} setActiveTab={setActiveTab} />
+      <Header activeTab={activeTab} setActiveTab={setActiveTab} id={user.id} />
 
       <section className="flex  gap-4 flex-1  mb-4 md:mb-8">
         <Phone name={user.firstName + " " + user.lastName} email={user.email} />

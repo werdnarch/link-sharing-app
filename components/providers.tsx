@@ -7,12 +7,12 @@ import DataProvider from "@/context/DataProvider";
 export default function Providers({ children }: { children: ReactNode }) {
   const [queryClient] = useState(() => new QueryClient());
   return (
-    <DataProvider>
-      <QueryClientProvider client={queryClient}>
+    <QueryClientProvider client={queryClient}>
+      <DataProvider>
         <ThemeProvider attribute={"class"} defaultTheme="dark">
           {children}
         </ThemeProvider>
-      </QueryClientProvider>
-    </DataProvider>
+      </DataProvider>
+    </QueryClientProvider>
   );
 }

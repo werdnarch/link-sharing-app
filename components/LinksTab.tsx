@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import Container from "./Container";
 import BlueButton from "./BlueButton";
-import { Plus } from "lucide-react";
+import { Loader2, Plus } from "lucide-react";
 import Wrapper from "./ui/Wrapper";
 import Image from "next/image";
 import { LinkType } from "@/types";
@@ -9,6 +9,8 @@ import NewLink from "./NewLink";
 import { useData } from "@/context/DataContext";
 import { toast } from "sonner";
 import { SubmitHandler, useForm, FormProvider } from "react-hook-form";
+import { useMutation } from "@tanstack/react-query";
+import { addLinks } from "@/app/dashboard/actions";
 
 interface LinkProps {
   active: boolean;
@@ -32,21 +34,35 @@ export default function LinksTab({ active }: LinkProps) {
   const {
     handleSubmit,
     register,
+    trigger,
     formState: { errors },
   } = methods;
 
+  const addLinkMutation = useMutation({
+    mutationFn: (links: LinkType[]) => addLinks(links),
+  });
+
+  const { isPending } = addLinkMutation;
+
   const onSubmit: SubmitHandler<LinkFormType> = (data) => {
-    console.log("Links data:", data);
+    addLinkMutation.mutate(links);
   };
 
-  const handleLinkAdd = () => {
+  const handleLinkAdd = async () => {
+    const isValid = await trigger();
+
+    if (!isValid) {
+      toast.error("Fix errors before adding a new link");
+      return;
+    }
+
     if (links.length >= 6) {
       toast.error("Maximum number of links reached");
       return;
     }
     const defaultLink: LinkType = {
       id: crypto.randomUUID(),
-      platform: "Youtube",
+      platform: "Github",
       link: "",
     };
     addLink(defaultLink);
@@ -112,7 +128,7 @@ export default function LinksTab({ active }: LinkProps) {
               type="submit"
               className="p-3 px-6 rounded-sm text-sm bg-[#633bff] text-white font-bold hover:bg-[#928f9c] cursor-pointer transition-all duration-200 ease-in-out"
             >
-              Save
+              {isPending ? <Loader2 className="size-4 animate-spin" /> : "Save"}
             </button>
           </div>
         </form>

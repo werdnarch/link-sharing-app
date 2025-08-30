@@ -60,4 +60,13 @@ export const verification = pgTable("verification", {
   ),
 });
 
-export const schema = { user, session, account, verification };
+export const Links = pgTable("links", {
+  id: text("id").primaryKey(),
+  platform: text("platform").notNull(),
+  link: text("link").notNull(),
+  userId: text("user_id")
+    .notNull()
+    .references(() => user.id, { onDelete: "cascade" }),
+});
+
+export const schema = { user, session, account, verification, Links };

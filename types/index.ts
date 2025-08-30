@@ -12,6 +12,6 @@ export type ProfileType = {
 
 export type LinkType = {
   id: string;
-  platform: "Github" | "Youtube";
+  platform:string;
   link: string;
 };

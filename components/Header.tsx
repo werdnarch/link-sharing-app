@@ -1,13 +1,15 @@
 import React from "react";
 import Logo from "./Logo";
-import { Eye, Link, User, UserCircle } from "lucide-react";
+import { Eye, Link2Icon, UserCircle } from "lucide-react";
+import Link from "next/link";
 
 interface HeaderProps {
   activeTab: "Links" | "Profile";
   setActiveTab: (tab: "Links" | "Profile") => void;
+  id: string;
 }
 
-export default function Header({ activeTab, setActiveTab }: HeaderProps) {
+export default function Header({ activeTab, setActiveTab, id }: HeaderProps) {
   return (
     <header className="w-full p-4 flex items-center justify-between containers rounded-lg">
       <Logo />
@@ -23,7 +25,7 @@ export default function Header({ activeTab, setActiveTab }: HeaderProps) {
                   : "hover:text-[#633cff]"
               } p-3 px-4 rounded-lg md:p-4 md:px-6 transition-all duration-200 ease-in-out flex items-center gap-2 cursor-pointer text-sm`}
             >
-              <Link className="size-4" />
+              <Link2Icon className="size-4" />
               <p className="hidden md:block">Links</p>
             </button>
           </li>
@@ -43,10 +45,12 @@ export default function Header({ activeTab, setActiveTab }: HeaderProps) {
         </ul>
       </nav>
 
-      <button className="flex items-center justify-center p-3 text-[#633cff] border border-[#633cff] rounded-sm md:hover:bg-[#928f9c] cursor-pointer transition-all duration-150 font-bold md:px-6 ease-in-out text-sm">
-        <Eye className="size-4 md:hidden" />
-        <p className="hidden md:block">Preview</p>
-      </button>
+      <Link href={`/${id}`}>
+        <button className="flex items-center justify-center p-3 text-[#633cff] border border-[#633cff] rounded-sm md:hover:bg-[#928f9c] cursor-pointer transition-all duration-150 font-bold md:px-6 ease-in-out text-sm">
+          <Eye className="size-4 md:hidden" />
+          <p className="hidden md:block">Preview</p>
+        </button>
+      </Link>
     </header>
   );
 }

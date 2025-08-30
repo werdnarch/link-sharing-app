@@ -16,8 +16,8 @@ interface NewLinkProps {
 }
 
 const platformRegexMap = {
-  Github: /^https:\/\/github\.com\/[A-Za-z0-9_-]+$/,
-  Youtube: /^https:\/\/(www\.)?youtube\.com\/.+$/,
+  Github: /^(https?:\/\/)?(www\.)?github\.com\/[A-Za-z0-9_-]+$/,
+  Youtube: /^(https?:\/\/)?(www\.)?youtube\.com\/.+$/,
 };
 
 export default function NewLink({
@@ -29,6 +29,8 @@ export default function NewLink({
   error,
 }: NewLinkProps) {
   const { removeLink, editLink } = useData();
+  const [input, setInput] = useState<string>("");
+
   const platforms = Object.keys(
     platformRegexMap
   ) as (keyof typeof platformRegexMap)[];
@@ -38,8 +40,8 @@ export default function NewLink({
   const [selectOpen, setSelectOpen] = useState(false);
 
   useEffect(() => {
-    editLink(id, { platform: selected });
-  }, [selected]);
+    editLink(id, { platform: selected, link: input });
+  }, [selected, input]);
 
   const validateLink = (value: string) =>
     platformRegexMap[selected].test(value) || `Invalid ${selected} link`;
@@ -111,17 +113,18 @@ export default function NewLink({
           <div className="relative">
             <input
               {...register(id, { validate: validateLink })}
+              onChange={(e) => setInput(e.target.value)}
               defaultValue={link}
               type="text"
               autoComplete="off"
               className="border containers p-4 px-12 w-full text-sm rounded-lg outline-0"
             />
             <Link2Icon className="size-4 absolute top-1/2 -translate-y-1/2 left-4" />
-            {error && (
+            {error ? (
               <p className="text-red-500 absolute top-1/2 -translate-y-1/2 right-4 text-sm">
                 {error.message}
               </p>
-            )}
+            ) : null}
           </div>
         </div>
       </div>

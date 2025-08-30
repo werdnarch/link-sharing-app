@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { ProfileType } from "@/types";
+import { LinkType, ProfileType } from "@/types";
 
 export const getProfileDetails = async () => {
   const res = await fetch("/api/user/me");
@@ -49,6 +49,38 @@ export const editProfileDetails = async ({
       success: false,
       message:
         error instanceof Error ? error.message : "Failed to update profile",
+    };
+  }
+};
+
+export const addLinks = async (data: LinkType[]) => {
+  try {
+    const res = await fetch("/api/user/links", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (!res.ok) {
+      return {
+        success: false,
+        message: `Request failed with status ${res.status}`,
+      };
+    }
+
+    const result = await res.json();
+    return {
+      success: true,
+      data: result,
+    };
+  } catch (error) {
+    console.error("Error updating/adding links:", error);
+    return {
+      success: false,
+      message:
+        error instanceof Error ? error.message : "Failed to update/add links",
     };
   }
 };
