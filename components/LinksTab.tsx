@@ -113,7 +113,7 @@ export default function LinksTab({ active }: LinkProps) {
                   className="w-[90%] max-w-[300px]"
                 />
                 <h1 className="text-lg md:text-2xl font-bold">
-                  Let's get you started
+                  Let&apos;s get you started
                 </h1>
                 <p className="text-sm w-[90%] max-w-[500px]">
                   Use the “Add new link” button to get started. Once you have
